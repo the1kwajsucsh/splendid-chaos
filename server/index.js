@@ -1,6 +1,10 @@
 const express = require('express')
 const app = express()
 
+app.use("/data", (req, res) => {
+    res.json({"data": ["song1", "song2", "song3", "song4"]});
+})
+
 app.use("/", (req, res) => {
     res.send("Server is running.");
 })
