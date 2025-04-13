@@ -6,6 +6,7 @@ app.use("/data", (req, res) => {
 })
 
 app.use("/", (req, res) => {
+    res.header('Access-Control-Allow-Origin: https://splendid-chaos-client.vercel.app');
     res.send("Server is running.");
 })
 
