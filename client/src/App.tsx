@@ -4,16 +4,16 @@ import './App.css';
 function App() {
 
   const [data, setData] = useState([]);
-  const apiUrl = '/data';
   const [loading, setLoading] = useState(true);
 
-  const environment = process.env.NODE_ENV === "production" ? 'production' : 'development'
+  const domain = process.env.NODE_ENV === "production" ? 'https://splendid-chaos-server.vercel.app/' : '/'
+  const apiUrl = 'data';
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await fetch(apiUrl);
+        const response = await fetch(domain + apiUrl);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -27,7 +27,7 @@ function App() {
     };
 
     fetchData();
-  }, []);
+  }, [domain, apiUrl]);
 
   if (loading) {
     return <p>Loading...</p>;
@@ -36,7 +36,6 @@ function App() {
   return (
     <div className="App">
         <p>Hello world here is my app</p>
-        <p>{environment}</p>
         {data && (
         <ul>
           {data.map((item) => (
