@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 
+type DataType = {
+  id: number,
+  name: string,
+  value: number,
+}
+
 function App() {
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<DataType[]>([]);
   const [loading, setLoading] = useState(true);
 
   const domain = process.env.NODE_ENV === "production" ? 'https://splendid-chaos-server.vercel.app/' : '/'
@@ -18,7 +24,7 @@ function App() {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const json = await response.json();
-        setData(json.data);
+        setData(json);
       } catch (e) {
         setData([]);
       } finally {
@@ -39,7 +45,7 @@ function App() {
         {data && (
         <ul>
           {data.map((item) => (
-            <li key={item}>{item}</li>
+            <li key={item.id}>{item.name}</li>
           ))}
         </ul>
       )}
