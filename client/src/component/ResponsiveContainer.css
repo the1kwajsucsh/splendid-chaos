@@ -1,0 +1,62 @@
+/* Variables for consistent theming */
+:root {
+    --background-color: #f3f4f6;
+    --container-bg: #ffffff;
+    --text-primary: #1f2937;
+    --text-secondary: #6b7280;
+    --border-color: #e5e7eb;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --mobile-breakpoint: 768px;
+    --container-width: 480px;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+  }
+  
+  /* Main container that takes up the full viewport */
+  .container {
+    min-height: 100vh;
+    background-color: var(--background-color);
+    display: flex;
+    justify-content: center;
+  }
+  
+  /* Content wrapper with responsive behavior */
+  .contentWrapper {
+    background-color: var(--container-bg);
+    box-shadow: 0 4px 6px var(--shadow-color);
+    transition: all 0.3s ease;
+  }
+  
+  /* Desktop specific styles */
+  .desktop {
+    width: 100%;
+    max-width: var(--container-width);
+  }
+  
+  /* Mobile specific styles */
+  .mobile {
+    width: 100%;
+  }
+  
+  /* Inner content container with padding */
+  .content {
+    padding: var(--spacing-md);
+  }
+  
+  /* Viewport indicator */
+  .viewportIndicator {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-sm);
+    text-align: right;
+  }
+  
+  /* Media query for mobile devices */
+  @media (max-width: 767px) {
+    .contentWrapper {
+      width: 100%;
+      max-width: none;
+    }
+  }
+  

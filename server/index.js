@@ -14,6 +14,17 @@ app.use("/data", async (_, res) => {
     res.json([...response]);
 })
 
+app.use("/music", async (req, res) => {
+    try {
+      const sql = neon(`${process.env.DATABASE_URL}`)
+      const response = await sql`SELECT * FROM music`
+      res.json([...response])
+    } catch (error) {
+      console.error("Error fetching music data:", error)
+      res.status(500).json({ error: "Failed to fetch music data" })
+    }
+  })
+
 app.use("/", (req, res) => {
     res.send("Server is running.");
 })
