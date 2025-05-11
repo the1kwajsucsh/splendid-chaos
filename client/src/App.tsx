@@ -1,27 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import './App.css';
-import { ResponsiveContainer } from './component/ResponsiveContainer';
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import { ResponsiveContainer } from "./component/ResponsiveContainer";
 
 type MusicType = {
-  id: number,
-  category: string,
-  instruments: string,
-  playtime: string,
-  performance_ready: boolean,
-  name: string,
-  genre_mood: string,
-  tempo: number,
-  date_modified: Date,
-  link: string,
-}
+  id: number;
+  category: string;
+  instruments: string;
+  playtime: string;
+  performance_ready: boolean;
+  name: string;
+  genre_mood: string;
+  tempo: number;
+  date_modified: Date;
+  link: string;
+};
 
 function App() {
-
   const [music, setMusic] = useState<MusicType[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const domain = process.env.NODE_ENV === "production" ? 'https://splendid-chaos-server.vercel.app/' : '/'
-  const apiUrl = 'music';
+  const domain =
+    process.env.NODE_ENV === "production"
+      ? "https://splendid-chaos-server.vercel.app/"
+      : "/";
+  const apiUrl = "music";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,7 +51,7 @@ function App() {
   }
 
   return (
-<ResponsiveContainer>
+    <ResponsiveContainer>
       <div className={"pageContainer"}>
         <header className={"header"}>
           <h1 className={"title"}>Splendid Chaos</h1>
@@ -59,7 +61,8 @@ function App() {
           <div className={"infoBox"}>
             <h2 className={"infoTitle"}>Welcome!</h2>
             <p className={"infoText"}>
-              This is a work-in-progress application to help manage the data of Splendid Chaos.
+              This is a work-in-progress application to help manage the data of
+              Splendid Chaos.
             </p>
           </div>
 
@@ -77,10 +80,13 @@ function App() {
           <div className={"featuresBox"}>
             <h2 className={"featuresTitle"}>Song List</h2>
             <ul className={"featuresList"}>
-              {music?.length > 0 && music.map((song: MusicType) => <li key={song.name} className={"featuresItem"}>
-                <span className={"featuresBullet"}></span>
-                <span>{song.name}</span>
-              </li>)}
+              {music?.length > 0 &&
+                music.map((song: MusicType) => (
+                  <li key={song.name} className={"featuresItem"}>
+                    <span className={"featuresBullet"}></span>
+                    <span>{song.name}</span>
+                  </li>
+                ))}
             </ul>
           </div>
         </section>
