@@ -1,32 +1,22 @@
 require('dotenv').config();
-const express = require('express')
-const { neon } = require('@neondatabase/serverless');
+const express = require('express');
 const cors = require('cors');
 
-const app = express()
-const PORT = process.env.PORT || 5000;
+// Import routes
+const musicRoutes = require('./routes/music');
 
+const app = express();
+app.use(express.json()); // Parses incoming JSON requests
 app.use(cors());
 
-app.use("/data", async (_, res) => {
-    const sql = neon(`${process.env.DATABASE_URL}`);
-    const response = await sql`select * from playing_with_neon`;
-    res.json([...response]);
-})
+const PORT = process.env.PORT || 5000;
 
-app.use("/music", async (req, res) => {
-    try {
-      const sql = neon(`${process.env.DATABASE_URL}`)
-      const response = await sql`SELECT * FROM music`
-      res.json([...response])
-    } catch (error) {
-      console.error("Error fetching music data:", error)
-      res.status(500).json({ error: "Failed to fetch music data" })
-    }
-  })
+// Use the music routes
+app.use('/music', musicRoutes);
 
-app.use("/", (req, res) => {
-    res.send("Server is running.");
-})
+// Root route
+app.use('/', (req, res) => {
+  res.send('Server is running.');
+});
 
 app.listen(PORT, console.log(`Server started on PORT ${PORT}`));
