@@ -3,10 +3,10 @@ import { Item } from "./ItemExplorer"
 
 interface ItemListProps {
     items: Item[]
-    onFileClick?: (file: Item) => void
+    onItemClick?: (file: Item) => void
   }
 
-export default function ItemList({ items, onFileClick }: ItemListProps) {
+export default function ItemList({ items, onItemClick }: ItemListProps) {
     if (items.length === 0) {
         return (
           <div className={"list-emptyState"}>
@@ -22,7 +22,7 @@ export default function ItemList({ items, onFileClick }: ItemListProps) {
             <ItemComponent
               key={item.id}
               file={item}
-              onClick={onFileClick}
+              onClick={onItemClick}
             />
           ))}
         </div>

@@ -20,8 +20,8 @@ export default function ItemComponent({ file, onClick }: ItemProps) {
   };
 
   const handleClick = (e: React.MouseEvent) => {
-    if (e.detail === 2) {
-      // Double click
+    if (e.detail === 1) {
+      // Single click
       onClick?.(file);
     }
   };

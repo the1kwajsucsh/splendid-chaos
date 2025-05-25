@@ -16,12 +16,12 @@ export type SortDirection = 'asc' | 'desc';
 
 interface ItemExplorerProps {
   items: Item[];
-  onFileClick?: (item: Item) => void;
+  onItemClick?: (item: Item) => void;
 }
 
 export default function ItemExplorer({
   items,
-  onFileClick,
+  onItemClick,
 }: ItemExplorerProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState<SortOption>('title');
@@ -65,7 +65,7 @@ export default function ItemExplorer({
           onDirectionChange={setSortDirection}
         />
       </div>
-      <ItemList items={filteredAndSortedItems} />
+      <ItemList items={filteredAndSortedItems} onItemClick={onItemClick} />
     </div>
   );
 }

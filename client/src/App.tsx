@@ -1,18 +1,22 @@
 import React from 'react';
 import './App.css';
-import { ResponsiveContainer } from './component/ResponsiveContainer';
-import { BrowserRouter, Route, Routes } from 'react-router';
+import { Route, Routes, useNavigate } from 'react-router';
 import Home from './home/Home';
 import Music from './Music/Music';
+import SongPage from './Music/SongPage';
 
 function App() {
+  const navigate = useNavigate();
+
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/music" element={<Music />} />
-        <Route path="/" element={<Home />} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route
+        path="/music/:songId"
+        element={<SongPage onNavigateBack={() => navigate('/music')} />}
+      />
+      <Route path="/music" element={<Music />} />
+      <Route path="/" element={<Home />} />
+    </Routes>
   );
 }
 

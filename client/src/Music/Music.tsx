@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import ItemExplorer, { Item } from '../component/itemExplorer/ItemExplorer';
 import { ResponsiveContainer } from '../component/ResponsiveContainer';
+import { useNavigate } from 'react-router';
 
-export type MusicType = {
+export type Song = {
   id: number;
   category: string;
   instruments: string;
@@ -16,8 +17,10 @@ export type MusicType = {
 };
 
 export default function Music() {
-  const [music, setMusic] = useState<MusicType[]>([]);
+  const [music, setMusic] = useState<Song[]>([]);
   const [loading, setLoading] = useState(true);
+
+  let navigate = useNavigate();
 
   const domain =
     process.env.NODE_ENV === 'production'
@@ -62,7 +65,10 @@ export default function Music() {
 
   return (
     <ResponsiveContainer>
-      <ItemExplorer items={items} />
+      <ItemExplorer
+        items={items}
+        onItemClick={(item) => navigate(`/music/${item.id}`)}
+      />
     </ResponsiveContainer>
   );
 }
