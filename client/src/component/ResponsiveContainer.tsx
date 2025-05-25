@@ -27,9 +27,9 @@ export function ResponsiveContainer({ children }: ResponsiveContainerProps) {
   }, []);
 
   return (
-    <div className={"container"}>
+    <div className={"responsive-container"}>
       <div className={`${"contentWrapper"} ${isMobile ? "mobile" : "desktop"}`}>
-        <div className={"content"}>
+        <div className={"responsive-content"}>
           {/* Optional: Display current mode */}
           <div className={"viewportIndicator"}>
             {isMobile ? "Mobile View" : "Desktop View"}

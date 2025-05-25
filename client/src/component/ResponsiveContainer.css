@@ -14,7 +14,7 @@
   }
   
   /* Main container that takes up the full viewport */
-  .container {
+  .responsive-container {
     min-height: 100vh;
     background-color: var(--background-color);
     display: flex;
@@ -40,7 +40,7 @@
   }
   
   /* Inner content container with padding */
-  .content {
+  .responsive-content {
     padding: var(--spacing-md);
   }
   
