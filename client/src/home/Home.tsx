@@ -1,60 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { ResponsiveContainer } from '../component/ResponsiveContainer';
+import { useNavigate } from 'react-router';
 
-export type MusicType = {
-  id: number;
-  category: string;
-  instruments: string;
-  playtime: string;
-  performance_ready: boolean;
-  name: string;
-  genre_mood: string;
-  tempo: number;
-  date_modified: Date;
-  link: string;
-};
-
-function Home() {
-  const [music, setMusic] = useState<MusicType[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  const domain =
-    process.env.NODE_ENV === 'production'
-      ? 'https://splendid-chaos-server.vercel.app/'
-      : '/';
-  const apiUrl = 'music';
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch(domain + apiUrl);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const json = await response.json();
-        setMusic(json);
-      } catch (e) {
-        console.error('Failed to fetch music data:', e);
-        setMusic([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [domain, apiUrl]);
-
-  if (loading) {
-    return <p>Loading...</p>;
-  }
+export default function Home() {
+  let navigate = useNavigate();
 
   return (
     <ResponsiveContainer>
       <div className={'pageContainer'}>
         <header className={'header'}>
           <h1 className={'title'}>Splendid Chaos</h1>
-          <p className={'subtitle'}>Subtitle</p>
+          <p className={'subtitle'}>Community Street Band</p>
         </header>
         <section className={'section'}>
           <div className={'infoBox'}>
@@ -66,7 +22,7 @@ function Home() {
           </div>
 
           <div className={'grid'}>
-            <div className={'gridItem'}>
+            <div className={'gridItem'} onClick={() => navigate('/music')}>
               <span className={'gridItemText'}>Music</span>
             </div>
             <div className={'gridItem'}>
@@ -76,23 +32,9 @@ function Home() {
               <span className={'gridItemText'}>Set Lists</span>
             </div>
           </div>
-          <div className={'featuresBox'}>
-            <h2 className={'featuresTitle'}>Song List</h2>
-            <ul className={'featuresList'}>
-              {music?.length > 0 &&
-                music.map((song: MusicType) => (
-                  <li key={song.name} className={'featuresItem'}>
-                    <span className={'featuresBullet'}></span>
-                    <span>{song.name}</span>
-                  </li>
-                ))}
-            </ul>
-          </div>
         </section>
         <footer className={'footer'}>&copy; 2025 Splendid Chaos</footer>
       </div>
     </ResponsiveContainer>
   );
 }
-
-export default Home;

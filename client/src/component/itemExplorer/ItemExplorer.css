@@ -1,10 +1,16 @@
-.container {
+.explorer-container {
   display: flex;
   flex-direction: column;
   height: 100vh;
   background-color: #ffffff;
   font-family:
     -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.explorer-header {
+  padding: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  background-color: #fafafa;
 }
 
 .list-container {
@@ -60,6 +66,100 @@
   white-space: nowrap;
 }
 
+.searchbar-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  border: 1px solid #d0d0d0;
+  border-radius: 8px;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  transition: border-color 0.2s;
+}
+
+.searchbar-container:focus-within {
+  border-color: #1976d2;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+}
+
+.searchbar-searchIcon {
+  margin-right: 0.5rem;
+  color: #666;
+  font-size: 1rem;
+}
+
+.searchbar-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  background: transparent;
+}
+
+.searchbar-input::placeholder {
+  color: #999;
+}
+
+.searchbar-clearButton {
+  background: none;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.searchbar-clearButton:hover {
+  background-color: #f0f0f0;
+}
+
+.sortOptions-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.sortOptions-sortControls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sortOptions-select {
+  padding: 0.5rem;
+  border: 1px solid #d0d0d0;
+  border-radius: 4px;
+  background-color: #ffffff;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.sortOptions-directionButton {
+  background: none;
+  border: 1px solid #d0d0d0;
+  border-radius: 4px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+}
+
+.sortOptions-directionButton:hover {
+  background-color: #f5f5f5;
+}
+
 @media (max-width: 768px) {
   .list-container {
     padding: 0.75rem;
@@ -75,5 +175,27 @@
   .item-details {
     flex-direction: column;
     gap: 0.25rem;
+  }
+}
+
+.list-emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  color: #666;
+}
+
+.list-emptyIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .sortOptions-container {
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: stretch;
   }
 }

@@ -1,7 +1,19 @@
 import { useEffect, useState } from 'react';
 import ItemExplorer, { Item } from '../component/itemExplorer/ItemExplorer';
-import { MusicType } from '../home/Home';
 import { ResponsiveContainer } from '../component/ResponsiveContainer';
+
+export type MusicType = {
+  id: number;
+  category: string;
+  instruments: string;
+  playtime: string;
+  performance_ready: boolean;
+  name: string;
+  genre_mood: string;
+  tempo: number;
+  date_modified: Date;
+  link: string;
+};
 
 export default function Music() {
   const [music, setMusic] = useState<MusicType[]>([]);

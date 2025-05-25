@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react';
 import ItemList from './ItemList';
 import './ItemExplorer.css';
+import SearchBar from './SearchBar';
+import SortOptions from './SortOptions';
 
 export interface Item {
   id: string;
@@ -49,7 +51,20 @@ export default function ItemExplorer({
   }, [items, searchQuery, sortBy, sortDirection]);
 
   return (
-    <div className="container">
+    <div className="explorer-container">
+      <div className="explorer-header">
+        <SearchBar
+          value={searchQuery}
+          onChange={setSearchQuery}
+          placeholder="Search files..."
+        />
+        <SortOptions
+          sortBy={sortBy}
+          sortDirection={sortDirection}
+          onSortChange={setSortBy}
+          onDirectionChange={setSortDirection}
+        />
+      </div>
       <ItemList items={filteredAndSortedItems} />
     </div>
   );

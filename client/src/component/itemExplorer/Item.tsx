@@ -34,8 +34,10 @@ export default function ItemComponent({ file, onClick }: ItemProps) {
         </div>
 
         <div className={'item-details'}>
-        <span className={'item-subtext'}>{file.subText}</span>
-          <span className={'item-date'}>{formatDate(file.dateModified)}</span>
+          <span className={'item-subtext'}>{file.subText}</span>
+          <span className={'item-date'}>
+            Modified {formatDate(file.dateModified)}
+          </span>
         </div>
       </div>
     </div>

@@ -9,9 +9,9 @@ interface ItemListProps {
 export default function ItemList({ items, onFileClick }: ItemListProps) {
     if (items.length === 0) {
         return (
-          <div className={"styles.emptyState"}>
-            <div className={"styles.emptyIcon"}>📁</div>
-            <p>No files found</p>
+          <div className={"list-emptyState"}>
+            <div className={"list-emptyIcon"}>📁</div>
+            <p>No items found</p>
           </div>
         )
     }
