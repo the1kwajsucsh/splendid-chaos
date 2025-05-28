@@ -25,13 +25,8 @@ router.post('/', async (req, res) => {
       performance_ready,
       genre_mood,
       tempo,
-      link
+      link,
     } = req.body;
-
-    // Validate required fields
-    if (!name) {
-      return res.status(400).json({ error: "Name is required" });
-    }
 
     const sql = getDbClient();
 
@@ -47,7 +42,7 @@ router.post('/', async (req, res) => {
         tempo,
         link
       ) VALUES (
-        ${name},
+        ${name || ''},
         ${category || null},
         ${instruments || null},
         ${playtime || null},
@@ -61,13 +56,13 @@ router.post('/', async (req, res) => {
 
     res.status(201).json(newRecord[0]);
   } catch (error) {
-    console.error("Error creating music record:", error);
-    res.status(500).json({ error: "Failed to create music record" });
+    console.error('Error creating music record:', error);
+    res.status(500).json({ error: 'Failed to create music record' });
   }
 });
 
 // PATCH - Update a music record
-router.patch("/:id", async (req, res) => {
+router.patch('/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const updateData = req.body;
@@ -75,7 +70,7 @@ router.patch("/:id", async (req, res) => {
     // Convert id to number to ensure it's valid
     const musicId = parseInt(id, 10);
     if (isNaN(musicId)) {
-      return res.status(400).json({ error: "Invalid ID format" });
+      return res.status(400).json({ error: 'Invalid ID format' });
     }
 
     const sql = getDbClient();
@@ -86,7 +81,7 @@ router.patch("/:id", async (req, res) => {
     `;
 
     if (existingRecord.length === 0) {
-      return res.status(404).json({ error: "Music record not found" });
+      return res.status(404).json({ error: 'Music record not found' });
     }
 
     // For PATCH, we need to build the query dynamically based on what fields were provided
@@ -94,19 +89,34 @@ router.patch("/:id", async (req, res) => {
     const currentRecord = await sql`
       SELECT * FROM music WHERE id = ${musicId}
     `;
-    
+
     const current = currentRecord[0];
-    
+
     // Merge the current record with the updates
     const updates = {
       name: updateData.name !== undefined ? updateData.name : current.name,
-      category: updateData.category !== undefined ? updateData.category : current.category,
-      instruments: updateData.instruments !== undefined ? updateData.instruments : current.instruments,
-      playtime: updateData.playtime !== undefined ? updateData.playtime : current.playtime,
-      performance_ready: updateData.performance_ready !== undefined ? updateData.performance_ready : current.performance_ready,
-      genre_mood: updateData.genre_mood !== undefined ? updateData.genre_mood : current.genre_mood,
+      category:
+        updateData.category !== undefined
+          ? updateData.category
+          : current.category,
+      instruments:
+        updateData.instruments !== undefined
+          ? updateData.instruments
+          : current.instruments,
+      playtime:
+        updateData.playtime !== undefined
+          ? updateData.playtime
+          : current.playtime,
+      performance_ready:
+        updateData.performance_ready !== undefined
+          ? updateData.performance_ready
+          : current.performance_ready,
+      genre_mood:
+        updateData.genre_mood !== undefined
+          ? updateData.genre_mood
+          : current.genre_mood,
       tempo: updateData.tempo !== undefined ? updateData.tempo : current.tempo,
-      link: updateData.link !== undefined ? updateData.link : current.link
+      link: updateData.link !== undefined ? updateData.link : current.link,
     };
 
     // Update with the merged data
@@ -127,20 +137,20 @@ router.patch("/:id", async (req, res) => {
 
     res.json(updatedRecord[0]);
   } catch (error) {
-    console.error("Error updating music record:", error);
-    res.status(500).json({ error: "Failed to update music record" });
+    console.error('Error updating music record:', error);
+    res.status(500).json({ error: 'Failed to update music record' });
   }
 });
 
 // DELETE - Remove a music record
-router.delete("/:id", async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     const { id } = req.params;
 
     // Convert id to number to ensure it's valid
     const musicId = parseInt(id, 10);
     if (isNaN(musicId)) {
-      return res.status(400).json({ error: "Invalid ID format" });
+      return res.status(400).json({ error: 'Invalid ID format' });
     }
 
     const sql = getDbClient();
@@ -151,7 +161,7 @@ router.delete("/:id", async (req, res) => {
     `;
 
     if (existingRecord.length === 0) {
-      return res.status(404).json({ error: "Music record not found" });
+      return res.status(404).json({ error: 'Music record not found' });
     }
 
     // Delete the record
@@ -162,8 +172,8 @@ router.delete("/:id", async (req, res) => {
 
     res.status(204).send();
   } catch (error) {
-    console.error("Error deleting music record:", error);
-    res.status(500).json({ error: "Failed to delete music record" });
+    console.error('Error deleting music record:', error);
+    res.status(500).json({ error: 'Failed to delete music record' });
   }
 });
 

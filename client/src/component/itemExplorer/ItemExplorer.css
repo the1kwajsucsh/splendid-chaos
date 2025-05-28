@@ -160,6 +160,27 @@
   background-color: #f5f5f5;
 }
 
+.sortOptions-addButton {
+  background-color: #10b981;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 0.75rem;
+  margin-left: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.sortOptions-addButton:hover {
+  background-color: #059669;
+}
+
 @media (max-width: 768px) {
   .list-container {
     padding: 0.75rem;
@@ -197,5 +218,12 @@
     flex-direction: column;
     gap: 0.75rem;
     align-items: stretch;
+  }
+
+  .sortOptions-addButton {
+    margin-left: 0;
+    margin-top: 0.5rem;
+    flex: 1;
+    min-width: 120px;
   }
 }

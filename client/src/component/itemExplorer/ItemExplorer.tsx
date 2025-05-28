@@ -3,6 +3,8 @@ import ItemList from './ItemList';
 import './ItemExplorer.css';
 import SearchBar from './SearchBar';
 import SortOptions from './SortOptions';
+import { useNavigate } from 'react-router';
+import { Song } from '../../Music/Music';
 
 export interface Item {
   id: string;
@@ -19,6 +21,12 @@ interface ItemExplorerProps {
   onItemClick?: (item: Item) => void;
 }
 
+const domain =
+  process.env.NODE_ENV === 'production'
+    ? 'https://splendid-chaos-server.vercel.app/'
+    : '/';
+const apiUrl = 'music';
+
 export default function ItemExplorer({
   items,
   onItemClick,
@@ -26,6 +34,7 @@ export default function ItemExplorer({
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState<SortOption>('title');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
+  let navigate = useNavigate();
 
   const filteredAndSortedItems = useMemo(() => {
     const filtered = items.filter((file) =>
@@ -50,6 +59,20 @@ export default function ItemExplorer({
     return filtered;
   }, [items, searchQuery, sortBy, sortDirection]);
 
+  async function createSong() {
+    const response = await fetch(`${domain}${apiUrl}/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.ok) {
+      const newSong: Song = await response.json();
+      navigate(`/music/${newSong.id}`);
+    }
+  }
+
   return (
     <div className="explorer-container">
       <div className="explorer-header">
@@ -63,6 +86,7 @@ export default function ItemExplorer({
           sortDirection={sortDirection}
           onSortChange={setSortBy}
           onDirectionChange={setSortDirection}
+          onAdd={() => createSong()}
         />
       </div>
       <ItemList items={filteredAndSortedItems} onItemClick={onItemClick} />

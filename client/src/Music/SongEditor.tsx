@@ -237,7 +237,7 @@ export default function SongEditor({
 
           <div className={'songEditor-formGroup'}>
             <label htmlFor="instruments" className={'songEditor-label'}>
-              Instruments to Sound
+              Instruments to Sound Good
             </label>
             <input
               type="text"
@@ -277,7 +277,7 @@ export default function SongEditor({
                 value={formData.tempo}
                 onChange={handleInputChange}
                 className={`${'songEditor-input'} ${errors.tempo ? 'songEditor-inputError' : ''}`}
-                placeholder="120"
+                placeholder="e.g. 120"
                 min="0"
               />
               {errors.tempo && (
