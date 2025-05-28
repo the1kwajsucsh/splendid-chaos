@@ -42,7 +42,7 @@ router.post('/', async (req, res) => {
         genre_mood,
         tempo,
         link,
-        notes,
+        notes
       ) VALUES (
         ${name || ''},
         ${category || null},

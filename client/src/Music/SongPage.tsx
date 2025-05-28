@@ -1,4 +1,4 @@
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { Song } from './Music';
 import { useEffect, useState } from 'react';
 import './songPage.css';
@@ -15,6 +15,8 @@ export default function SongPage({
   onNavigateBack,
 }: SongEditorPageProps) {
   const { songId } = useParams();
+  const navigate = useNavigate();
+
   const [song, setSong] = useState<Song | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -48,6 +50,24 @@ export default function SongPage({
       fetchSong();
     }
   }, [domain, apiUrl, songId]);
+
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(`${domain}${apiUrl}/${song?.id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete song');
+      }
+      navigate('/music');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to delete song');
+    }
+  };
 
   const handleSave = (updatedSong: Song) => {
     setSong(updatedSong);
@@ -131,6 +151,7 @@ export default function SongPage({
         onSave={handleSave}
         onCancel={handleCancel}
         onError={handleError}
+        onDelete={handleDelete}
       />
     </div>
   );

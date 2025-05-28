@@ -7,6 +7,7 @@ interface SongEditorProps {
   onSave?: (updatedSong: Song) => void;
   onCancel?: () => void;
   onError?: (error: string) => void;
+  onDelete?: () => void;
 }
 
 export default function SongEditor({
@@ -14,6 +15,7 @@ export default function SongEditor({
   onSave,
   onCancel,
   onError,
+  onDelete
 }: SongEditorProps) {
   const [formData, setFormData] = useState({
     name: song.name || '',
@@ -164,6 +166,26 @@ export default function SongEditor({
     }
   };
 
+  const handleDelete = () => {
+   if (hasChanges) {
+      if (
+        window.confirm(
+          'You have unsaved changes. Are you sure you want to delete?'
+        )
+      ) {
+        onDelete?.();
+      }
+    } else {
+      if (
+        window.confirm(
+          'Are you sure you want to delete?'
+        )
+      ) {
+        onDelete?.();
+      }
+    }
+  }
+
   const lastModifiedDate = new Date(song.date_modified);
 
   let currentHour = lastModifiedDate.getHours();
@@ -174,10 +196,23 @@ export default function SongEditor({
     <ResponsiveContainer>
       <div className={'songEditor-container'}>
         <div className={'songEditor-header'}>
-          <h1 className={'songEditor-title'}>Edit Song</h1>
-          <p className={'songEditor-subtitle'}>
-            Update the details for "{song.name}"
-          </p>
+          <div className={'songEditor-headerContent'}>
+            <div className={'songEditor-titleSection'}>
+              <h1 className={'songEditor-title'}>Edit Song</h1>
+              <p className={'songEditor-subtitle'}>Update the details for "{song.name}"</p>
+            </div>
+            <div className={'songEditor-headerActions'}>
+                <button
+                  type="button"
+                  onClick={() => handleDelete()}
+                  className={'songEditor-deleteButton'}
+                  disabled={loading}
+                  aria-label="Delete song"
+                >
+                  🗑️ Delete
+                </button>
+              </div>
+          </div>
         </div>
 
         <form onSubmit={handleSubmit} className={'songEditor-form'}>
