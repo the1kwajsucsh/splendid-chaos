@@ -171,6 +171,12 @@
   gap: 1rem;
 }
 
+.songEditor-formRowFull {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
 .songEditor-label {
   font-weight: 500;
   color: #374151;
@@ -300,6 +306,10 @@
 .songEditor-lastModified {
   color: #6b7280;
   font-size: 0.75rem;
+}
+
+textarea.songEditor-input {
+  field-sizing: content;
 }
 
 /* Mobile optimizations */

@@ -26,6 +26,7 @@ router.post('/', async (req, res) => {
       genre_mood,
       tempo,
       link,
+      notes,
     } = req.body;
 
     const sql = getDbClient();
@@ -40,7 +41,8 @@ router.post('/', async (req, res) => {
         performance_ready,
         genre_mood,
         tempo,
-        link
+        link,
+        notes,
       ) VALUES (
         ${name || ''},
         ${category || null},
@@ -49,7 +51,8 @@ router.post('/', async (req, res) => {
         ${performance_ready || null},
         ${genre_mood || null},
         ${tempo || null},
-        ${link || null}
+        ${link || null},
+        ${notes || null}
       )
       RETURNING *
     `;
@@ -117,6 +120,7 @@ router.patch('/:id', async (req, res) => {
           : current.genre_mood,
       tempo: updateData.tempo !== undefined ? updateData.tempo : current.tempo,
       link: updateData.link !== undefined ? updateData.link : current.link,
+      notes: updateData.notes !== undefined ? updateData.notes : current.notes,
     };
 
     // Update with the merged data
@@ -130,7 +134,8 @@ router.patch('/:id', async (req, res) => {
         performance_ready = ${updates.performance_ready},
         genre_mood = ${updates.genre_mood},
         tempo = ${updates.tempo},
-        link = ${updates.link}
+        link = ${updates.link},
+        notes = ${updates.notes}
       WHERE id = ${musicId}
       RETURNING *
     `;

@@ -14,6 +14,7 @@ export type Song = {
   tempo: number;
   date_modified: Date;
   link: string;
+  notes: string;
 };
 
 export default function Music() {

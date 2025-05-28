@@ -24,6 +24,7 @@ export default function SongEditor({
     genre_mood: song.genre_mood || '',
     tempo: song.tempo?.toString() || '',
     link: song.link || '',
+    notes: song.notes || '',
   });
 
   const [loading, setLoading] = useState(false);
@@ -46,7 +47,8 @@ export default function SongEditor({
       formData.performance_ready !== (song.performance_ready || false) ||
       formData.genre_mood !== (song.genre_mood || '') ||
       formData.tempo !== (song.tempo?.toString() || '') ||
-      formData.link !== (song.link || '');
+      formData.link !== (song.link || '') ||
+      formData.notes !== (song.notes || '');
 
     setHasChanges(hasFormChanges);
   }, [formData, song]);
@@ -121,6 +123,7 @@ export default function SongEditor({
         genre_mood: formData.genre_mood || null,
         tempo: formData.tempo ? Number(formData.tempo) : null,
         link: formData.link || null,
+        notes: formData.notes || null,
       };
 
       const response = await fetch(`${domain}${apiUrl}/${song.id}`, {
@@ -286,6 +289,22 @@ export default function SongEditor({
             </div>
           </div>
 
+          <div className={'songEditor-formRowFull'}>
+            <div className={'songEditor-formGroup'}>
+              <label htmlFor="notes" className={'songEditor-label'}>
+                Notes
+              </label>
+              <textarea
+                id="notes"
+                name="notes"
+                value={formData.notes}
+                onChange={handleInputChange}
+                className={'songEditor-input'}
+                placeholder="notes"
+              />
+            </div>
+          </div>
+
           <div className={'songEditor-formGroup'}>
             <label htmlFor="link" className={'songEditor-label'}>
               Link
@@ -297,7 +316,7 @@ export default function SongEditor({
               value={formData.link}
               onChange={handleInputChange}
               className={`${'songEditor-input'} ${errors.link ? 'songEditor-inputError' : ''}`}
-              placeholder="https://example.com/song"
+              placeholder="Link to G-Drive"
             />
             {errors.link && (
               <span className={'songEditor-errorText'}>{errors.link}</span>
