@@ -11,9 +11,10 @@ export interface Item {
   title: string;
   subText: string;
   dateModified: Date;
+  lastDateRehearsed: Date;
 }
 
-export type SortOption = 'title' | 'dateModified';
+export type SortOption = 'title' | 'dateModified' | 'lastRehearsed';
 export type SortDirection = 'asc' | 'desc';
 
 interface ItemExplorerProps {
@@ -50,6 +51,9 @@ export default function ItemExplorer({
           break;
         case 'dateModified':
           comparison = a.dateModified.getTime() - b.dateModified.getTime();
+          break;
+        case 'lastRehearsed': 
+          comparison = a.lastDateRehearsed.getTime() - b.lastDateRehearsed.getTime();
           break;
       }
 

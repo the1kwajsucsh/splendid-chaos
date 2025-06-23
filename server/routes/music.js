@@ -27,6 +27,8 @@ router.post('/', async (req, res) => {
       tempo,
       link,
       notes,
+      last_date_rehearsed,
+      number_times_rehearsed,
     } = req.body;
 
     const sql = getDbClient();
@@ -42,7 +44,10 @@ router.post('/', async (req, res) => {
         genre_mood,
         tempo,
         link,
-        notes
+        notes,
+        last_date_rehearsed,
+        number_times_rehearsed,
+        date_modified
       ) VALUES (
         ${name || ''},
         ${category || null},
@@ -52,7 +57,10 @@ router.post('/', async (req, res) => {
         ${genre_mood || null},
         ${tempo || null},
         ${link || null},
-        ${notes || null}
+        ${notes || null},
+        ${last_date_rehearsed || null},
+        ${number_times_rehearsed || null},
+        ${new Date().toISOString()}
       )
       RETURNING *
     `;
@@ -121,6 +129,14 @@ router.patch('/:id', async (req, res) => {
       tempo: updateData.tempo !== undefined ? updateData.tempo : current.tempo,
       link: updateData.link !== undefined ? updateData.link : current.link,
       notes: updateData.notes !== undefined ? updateData.notes : current.notes,
+      last_date_rehearsed:
+        updateData.last_date_rehearsed !== undefined
+          ? updateData.last_date_rehearsed
+          : current.last_date_rehearsed,
+      number_times_rehearsed:
+        updateData.number_times_rehearsed !== undefined
+          ? updateData.number_times_rehearsed
+          : current.number_times_rehearsed,
     };
 
     // Update with the merged data
@@ -135,7 +151,10 @@ router.patch('/:id', async (req, res) => {
         genre_mood = ${updates.genre_mood},
         tempo = ${updates.tempo},
         link = ${updates.link},
-        notes = ${updates.notes}
+        notes = ${updates.notes},
+        last_date_rehearsed = ${updates.last_date_rehearsed},
+        number_times_rehearsed = ${updates.number_times_rehearsed},
+        date_modified = ${new Date().toISOString()}
       WHERE id = ${musicId}
       RETURNING *
     `;

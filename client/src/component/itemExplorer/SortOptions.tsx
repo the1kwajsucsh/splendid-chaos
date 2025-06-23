@@ -18,6 +18,7 @@ export default function SortOptions({
   const sortOptions: { value: SortOption; label: string }[] = [
     { value: 'title', label: 'Title' },
     { value: 'dateModified', label: 'Date Modified' },
+    { value: 'lastRehearsed', label: 'Last Rehearsed' },
   ];
 
   return (

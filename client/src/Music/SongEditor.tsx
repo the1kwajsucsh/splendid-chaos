@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Song } from './Music';
 import { ResponsiveContainer } from '../component/ResponsiveContainer';
+import { formatDate } from './../util/dateUtil';
 
 interface SongEditorProps {
   song: Song;
@@ -15,7 +16,7 @@ export default function SongEditor({
   onSave,
   onCancel,
   onError,
-  onDelete
+  onDelete,
 }: SongEditorProps) {
   const [formData, setFormData] = useState({
     name: song.name || '',
@@ -27,6 +28,8 @@ export default function SongEditor({
     tempo: song.tempo?.toString() || '',
     link: song.link || '',
     notes: song.notes || '',
+    last_date_rehearsed: song.last_date_rehearsed || null,
+    number_times_rehearsed: song.number_times_rehearsed || 0,
   });
 
   const [loading, setLoading] = useState(false);
@@ -41,7 +44,7 @@ export default function SongEditor({
 
   // Track if form has changes
   useEffect(() => {
-    const hasFormChanges =
+    const hasFormChanges: boolean =
       formData.name !== (song.name || '') ||
       formData.category !== (song.category || '') ||
       formData.instruments !== (song.instruments || '') ||
@@ -50,7 +53,8 @@ export default function SongEditor({
       formData.genre_mood !== (song.genre_mood || '') ||
       formData.tempo !== (song.tempo?.toString() || '') ||
       formData.link !== (song.link || '') ||
-      formData.notes !== (song.notes || '');
+      formData.notes !== (song.notes || '') ||
+      formData.number_times_rehearsed !== (song.number_times_rehearsed || null);
 
     setHasChanges(hasFormChanges);
   }, [formData, song]);
@@ -126,6 +130,8 @@ export default function SongEditor({
         tempo: formData.tempo ? Number(formData.tempo) : null,
         link: formData.link || null,
         notes: formData.notes || null,
+        last_date_rehearsed: formData.last_date_rehearsed || null,
+        number_times_rehearsed: formData.number_times_rehearsed || 0,
       };
 
       const response = await fetch(`${domain}${apiUrl}/${song.id}`, {
@@ -167,7 +173,7 @@ export default function SongEditor({
   };
 
   const handleDelete = () => {
-   if (hasChanges) {
+    if (hasChanges) {
       if (
         window.confirm(
           'You have unsaved changes. Are you sure you want to delete?'
@@ -176,15 +182,11 @@ export default function SongEditor({
         onDelete?.();
       }
     } else {
-      if (
-        window.confirm(
-          'Are you sure you want to delete?'
-        )
-      ) {
+      if (window.confirm('Are you sure you want to delete?')) {
         onDelete?.();
       }
     }
-  }
+  };
 
   const lastModifiedDate = new Date(song.date_modified);
 
@@ -199,19 +201,21 @@ export default function SongEditor({
           <div className={'songEditor-headerContent'}>
             <div className={'songEditor-titleSection'}>
               <h1 className={'songEditor-title'}>Edit Song</h1>
-              <p className={'songEditor-subtitle'}>Update the details for "{song.name}"</p>
+              <p className={'songEditor-subtitle'}>
+                Update the details for "{song.name}"
+              </p>
             </div>
             <div className={'songEditor-headerActions'}>
-                <button
-                  type="button"
-                  onClick={() => handleDelete()}
-                  className={'songEditor-deleteButton'}
-                  disabled={loading}
-                  aria-label="Delete song"
-                >
-                  🗑️ Delete
-                </button>
-              </div>
+              <button
+                type="button"
+                onClick={() => handleDelete()}
+                className={'songEditor-deleteButton'}
+                disabled={loading}
+                aria-label="Delete song"
+              >
+                🗑️ Delete
+              </button>
+            </div>
           </div>
         </div>
 
@@ -356,6 +360,35 @@ export default function SongEditor({
             {errors.link && (
               <span className={'songEditor-errorText'}>{errors.link}</span>
             )}
+          </div>
+
+          <div className={'songEditor-formGroup'}>
+            <p>
+              <b>Last Rehearsed: </b>
+              {formData.last_date_rehearsed
+                ? formatDate(formData.last_date_rehearsed)
+                : 'Unknown'}
+            </p>
+            <p>
+              <b>Number of Times Rehearsed: </b>
+              {formData.number_times_rehearsed ?? 0}
+            </p>
+            <button
+              type="button"
+              className="songEditor-formButton"
+              onClick={() => {
+                setFormData((prev) => ({
+                  ...prev,
+                  last_date_rehearsed: new Date().toISOString(),
+                  number_times_rehearsed:
+                    prev.number_times_rehearsed > 0
+                      ? prev.number_times_rehearsed + 1
+                      : 1,
+                }));
+              }}
+            >
+              Update Last Rehearsed
+            </button>
           </div>
 
           <div className={'songEditor-checkboxGroup'}>

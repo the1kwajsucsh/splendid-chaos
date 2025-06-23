@@ -1,3 +1,4 @@
+import { formatDate } from '../../util/dateUtil';
 import { Item } from './ItemExplorer';
 
 interface ItemProps {
@@ -6,19 +7,6 @@ interface ItemProps {
 }
 
 export default function ItemComponent({ file, onClick }: ItemProps) {
-  const formatDate = (date: Date) => {
-    if (!date) {
-      return '';
-    }
-
-    return date.toLocaleDateString(undefined, {
-      month: 'short',
-      day: 'numeric',
-      year:
-        date.getFullYear() !== new Date().getFullYear() ? 'numeric' : undefined,
-    });
-  };
-
   const handleClick = (e: React.MouseEvent) => {
     if (e.detail === 1) {
       // Single click

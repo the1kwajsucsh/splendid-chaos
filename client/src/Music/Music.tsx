@@ -15,6 +15,8 @@ export type Song = {
   date_modified: Date;
   link: string;
   notes: string;
+  last_date_rehearsed: string;
+  number_times_rehearsed: number;
 };
 
 export default function Music() {
@@ -60,6 +62,7 @@ export default function Music() {
       title: song.name,
       subText: song.category,
       dateModified: new Date(song.date_modified),
+      lastDateRehearsed: new Date(song.last_date_rehearsed),
     };
     return item;
   });
