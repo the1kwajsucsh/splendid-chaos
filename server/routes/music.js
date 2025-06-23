@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
       notes = null,
       last_date_rehearsed = null,
       number_times_rehearsed = null,
-    } = req.body;
+    } = req?.body;
 
     const sql = getDbClient();
 
