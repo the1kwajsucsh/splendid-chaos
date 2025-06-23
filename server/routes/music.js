@@ -18,17 +18,17 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const {
-      name,
-      category,
-      instruments,
-      playtime,
-      performance_ready,
-      genre_mood,
-      tempo,
-      link,
-      notes,
-      last_date_rehearsed,
-      number_times_rehearsed,
+      name = '',
+      category = null,
+      instruments = null,
+      playtime = null,
+      performance_ready = null,
+      genre_mood = null,
+      tempo = null,
+      link = null,
+      notes = null,
+      last_date_rehearsed = null,
+      number_times_rehearsed = null,
     } = req.body;
 
     const sql = getDbClient();
