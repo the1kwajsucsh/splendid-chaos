@@ -17,19 +17,19 @@ router.get('/', async (req, res) => {
 // POST - Create a new music record
 router.post('/', async (req, res) => {
   try {
-    const {
-      name = '',
-      category = null,
-      instruments = null,
-      playtime = null,
-      performance_ready = null,
-      genre_mood = null,
-      tempo = null,
-      link = null,
-      notes = null,
-      last_date_rehearsed = null,
-      number_times_rehearsed = null,
-    } = req?.body;
+    // const {
+    //   name = '',
+    //   category = null,
+    //   instruments = null,
+    //   playtime = null,
+    //   performance_ready = null,
+    //   genre_mood = null,
+    //   tempo = null,
+    //   link = null,
+    //   notes = null,
+    //   last_date_rehearsed = null,
+    //   number_times_rehearsed = null,
+    // } = req?.body;
 
     const sql = getDbClient();
 
@@ -49,17 +49,17 @@ router.post('/', async (req, res) => {
         number_times_rehearsed,
         date_modified
       ) VALUES (
-        ${name || ''},
-        ${category || null},
-        ${instruments || null},
-        ${playtime || null},
-        ${performance_ready || null},
-        ${genre_mood || null},
-        ${tempo || null},
-        ${link || null},
-        ${notes || null},
-        ${last_date_rehearsed || null},
-        ${number_times_rehearsed || null},
+        ${''},
+        ${null},
+        ${null},
+        ${null},
+        ${null},
+        ${null},
+        ${null},
+        ${null},
+        ${null},
+        ${null},
+        ${null},
         ${new Date().toISOString()}
       )
       RETURNING *
